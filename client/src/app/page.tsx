@@ -5,8 +5,8 @@ import api from '@/utils/api';
 import BlurText from '@/components/reactbits/BlurText';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import FadeIn from '@/components/reactbits/FadeIn';
-import MagneticButton from '@/components/reactbits/MagneticButton';
 import GradientButton from '@/components/reactbits/GradientButton';
+import MagneticButton from '@/components/reactbits/MagneticButton';
 import Image from 'next/image';
 
 const useIsMobile = () => {
@@ -66,12 +66,8 @@ export default function Home() {
     <div className="relative">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-20 pt-20">
-        {/* Dynamic Background for Hero only - Desktop only */}
-        {!isMobile && <Aurora speed={0.4} intensity={0.1} />}
-        {/* Static gradient background for mobile */}
-        {isMobile && (
-          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
-        )}
+        {/* Static gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <FadeIn>
@@ -114,12 +110,6 @@ export default function Home() {
           </FadeIn>
         </div>
 
-        {/* Scroll indicator */}
-        <div className="absolute bottom-10 left-1/2 -translate-x-1/2 animate-bounce">
-          <div className="w-6 h-10 rounded-full border-2 border-foreground/30 flex items-start justify-center p-1">
-            <div className="w-1.5 h-3 bg-primary rounded-full animate-pulse" />
-          </div>
-        </div>
       </section>
 
       {/* Stats Section */}
@@ -341,13 +331,11 @@ export default function Home() {
                 <p className="text-xl text-foreground/70 max-w-2xl mx-auto mb-10">
                   Bergabunglah dengan ribuan UMKM lainnya dan nikmati kemudahan berjualan online.
                 </p>
-                <MagneticButton>
-                  <Link href="/register">
-                    <GradientButton className="text-lg px-8 py-4">
-                      Daftar Sekarang – Gratis!
-                    </GradientButton>
-                  </Link>
-                </MagneticButton>
+                <Link href="/register">
+                  <GradientButton className="text-lg px-8 py-4">
+                    Daftar Sekarang – Gratis!
+                  </GradientButton>
+                </Link>
               </div>
             </div>
           </FadeIn>
