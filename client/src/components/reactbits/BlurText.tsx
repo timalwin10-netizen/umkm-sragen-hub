@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useEffect, useState } from 'react';
 import { motion, useInView, useAnimation, Variant } from 'framer-motion';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface BlurTextProps {
     text: string;
@@ -29,9 +30,10 @@ export default function BlurText({
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, amount: threshold });
     const controls = useAnimation();
+    const isMobile = useIsMobile();
 
     const defaultFrom = {
-        filter: 'blur(10px)',
+        filter: isMobile ? 'blur(0px)' : 'blur(10px)',
         opacity: 0,
         y: direction === 'top' ? -20 : 20,
     };

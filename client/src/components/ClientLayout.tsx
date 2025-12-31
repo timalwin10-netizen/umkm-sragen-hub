@@ -1,6 +1,5 @@
 'use client';
 
-import Aurora from '@/components/reactbits/Aurora';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ThemeProvider } from '@/components/ThemeProvider';

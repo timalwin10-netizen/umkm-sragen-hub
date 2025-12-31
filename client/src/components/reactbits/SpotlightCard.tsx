@@ -1,5 +1,6 @@
 'use client';
 import { useRef, useState, ReactNode } from 'react';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface SpotlightCardProps {
     children: ReactNode;
@@ -15,9 +16,10 @@ export default function SpotlightCard({
     const divRef = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [opacity, setOpacity] = useState(0);
+    const isMobile = useIsMobile();
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!divRef.current) return;
+        if (!divRef.current || isMobile) return;
         const rect = divRef.current.getBoundingClientRect();
         setPosition({ x: e.clientX - rect.left, y: e.clientY - rect.top });
     };
@@ -33,13 +35,15 @@ export default function SpotlightCard({
             onMouseLeave={handleMouseLeave}
             className={`relative overflow-hidden rounded-2xl bg-card border border-border transition-all duration-300 hover:border-primary/50 hover:shadow-xl hover:shadow-primary/5 ${className}`}
         >
-            <div
-                className="pointer-events-none absolute inset-0 transition-opacity duration-300"
-                style={{
-                    background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, var(--color-primary, ${spotlightColor}), transparent 40%)`,
-                    opacity: opacity * 0.15,
-                }}
-            />
+            {!isMobile && (
+                <div
+                    className="pointer-events-none absolute inset-0 transition-opacity duration-300"
+                    style={{
+                        background: `radial-gradient(600px circle at ${position.x}px ${position.y}px, var(--color-primary, ${spotlightColor}), transparent 40%)`,
+                        opacity: opacity * 0.15,
+                    }}
+                />
+            )}
             <div className="relative z-10">
                 {children}
             </div>

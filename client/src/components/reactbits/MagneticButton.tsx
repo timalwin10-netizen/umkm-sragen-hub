@@ -1,6 +1,7 @@
 'use client';
 import { useRef, useState, ReactNode } from 'react';
 import { motion } from 'framer-motion';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
 interface MagneticButtonProps {
     children: ReactNode;
@@ -15,9 +16,10 @@ export default function MagneticButton({
 }: MagneticButtonProps) {
     const ref = useRef<HTMLDivElement>(null);
     const [position, setPosition] = useState({ x: 0, y: 0 });
+    const isMobile = useIsMobile();
 
     const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return;
+        if (!ref.current || isMobile) return;
         const rect = ref.current.getBoundingClientRect();
         const centerX = rect.left + rect.width / 2;
         const centerY = rect.top + rect.height / 2;

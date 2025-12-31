@@ -8,19 +8,8 @@ import FadeIn from '@/components/reactbits/FadeIn';
 import GradientButton from '@/components/reactbits/GradientButton';
 import MagneticButton from '@/components/reactbits/MagneticButton';
 import Image from 'next/image';
+import { useIsMobile } from '@/hooks/useIsMobile';
 
-const useIsMobile = () => {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
-
-  return isMobile;
-};
 
 interface Shop {
   _id: string;
