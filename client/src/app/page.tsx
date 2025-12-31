@@ -2,14 +2,12 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import api from '@/utils/api';
-import { AuroraSection } from '@/components/reactbits/Aurora';
 import BlurText from '@/components/reactbits/BlurText';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import FadeIn from '@/components/reactbits/FadeIn';
 import MagneticButton from '@/components/reactbits/MagneticButton';
 import GradientButton from '@/components/reactbits/GradientButton';
 import Image from 'next/image';
-import Aurora from '@/components/reactbits/Aurora';
 
 const useIsMobile = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -68,8 +66,12 @@ export default function Home() {
     <div className="relative">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-20 pt-20">
-        {/* Dynamic Background for Hero only */}
-        <Aurora speed={0.4} intensity={0.1} />
+        {/* Dynamic Background for Hero only - Desktop only */}
+        {!isMobile && <Aurora speed={0.4} intensity={0.1} />}
+        {/* Static gradient background for mobile */}
+        {isMobile && (
+          <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+        )}
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <FadeIn>
@@ -332,7 +334,6 @@ export default function Home() {
           <FadeIn>
             <div className="relative rounded-3xl overflow-hidden border border-border">
               <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10" />
-              <AuroraSection speed={0.8} />
               <div className="relative z-10 text-center py-20 px-4">
                 <h2 className="text-3xl md:text-5xl font-bold text-foreground mb-6">
                   Siap Memajukan <span className="gradient-text">Bisnis Anda?</span>
