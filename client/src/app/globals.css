@@ -1,0 +1,112 @@
+@import "tailwindcss";
+
+:root {
+  /* Light Mode (Default) - Brown Theme */
+  --background: #faf8f5;
+  --foreground: #1a1a1a;
+  --primary: #8b5a2b;
+  --secondary: #a0522d;
+  --accent: #cd853f;
+  --muted: #f5f0e8;
+  --card: #ffffff;
+  --border: #e5ddd3;
+  --card-foreground: #1a1a1a;
+}
+
+.dark {
+  /* Dark Mode - Brown Theme */
+  --background: #0f0d0a;
+  --foreground: #f5f5f5;
+  --primary: #cd853f;
+  --secondary: #a0522d;
+  --accent: #8b5a2b;
+  --muted: #1a1814;
+  --card: #151310;
+  --border: #2a2520;
+  --card-foreground: #f5f5f5;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-primary: var(--primary);
+  --color-secondary: var(--secondary);
+  --color-accent: var(--accent);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-card-foreground: var(--card-foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', Arial, Helvetica, sans-serif;
+  min-height: 100vh;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Custom scrollbar - Light */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--border);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--primary);
+}
+
+/* Glass effect utility */
+.glass {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.dark .glass {
+  background: rgba(21, 19, 16, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Gradient text */
+.gradient-text {
+  background: linear-gradient(135deg, #8b5a2b 0%, #cd853f 50%, #deb887 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glow effect */
+.glow {
+  box-shadow: 0 0 20px rgba(139, 90, 43, 0.3);
+}
+
+.glow-text {
+  text-shadow: 0 0 20px rgba(139, 90, 43, 0.5);
+}
+
+/* Card styles */
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  transition: all 0.3s ease;
+}
