@@ -1,10 +1,11 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 
 const api = axios.create({
-    baseURL: process.env.NEXT_PUBLIC_API_URL || '/api',
+    baseURL: '/api', // Relative path for Vercel Monorepo
     headers: {
         'Content-Type': 'application/json',
     },
+    withCredentials: true
 });
 
 api.interceptors.request.use((config: InternalAxiosRequestConfig) => {
