@@ -35,7 +35,8 @@ const connectDB = async () => {
     } catch (error) {
         if (process.env.NODE_ENV === 'production') {
             console.error(`CRITICAL: Failed to connect to production database: ${error.message}`);
-            process.exit(1);
+            // Don't exit in serverless environment, just let it throw or handle it
+            throw error;
         }
 
         console.log('Falling back to In-Memory Database...');
