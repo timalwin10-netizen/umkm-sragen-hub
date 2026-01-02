@@ -38,9 +38,6 @@ export default function Navbar() {
             transition={{ duration: 0.3 }}
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md border-b border-border py-4' : 'bg-transparent py-5'}`}
         >
-            <div className="w-full bg-red-600 text-white text-center text-xs font-bold py-1 px-2">
-                VERIFICATION MODE: SEO FIX APPLIED
-            </div>
             <div className="container mx-auto px-4 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2 group">
                     <span className="text-2xl font-bold gradient-text">UMKM</span>

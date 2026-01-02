@@ -47,7 +47,7 @@ export default function Footer() {
                 </div>
 
                 <div className="border-t border-border mt-8 pt-8 text-center text-foreground/50">
-                    <p>&copy; {new Date().getFullYear()} UMKM Sragen Hub. All rights reserved. <span className="opacity-50 text-xs">debug-v2</span></p>
+                    <p>&copy; {new Date().getFullYear()} UMKM Sragen Hub. All rights reserved.</p>
                 </div>
             </div>
         </footer>
