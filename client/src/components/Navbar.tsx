@@ -47,10 +47,10 @@ export default function Navbar() {
                     />
                 </Link>
 
-                <div className="hidden md:flex items-center gap-8">
+                {/* Secondary Navigation - Toko & Berita */}
+                <div className="hidden md:flex items-center gap-6">
                     <NavLink href="/toko">Toko UMKM</NavLink>
                     <NavLink href="/berita">Berita</NavLink>
-                    <NavLink href="/tantangan">Tantangan</NavLink>
                 </div>
 
                 <div className="flex items-center gap-4">
@@ -174,7 +174,6 @@ export default function Navbar() {
                         <div className="flex flex-col gap-2">
                             <MobileNavLink href="/toko" onClick={() => setIsMobileMenuOpen(false)}>Toko UMKM</MobileNavLink>
                             <MobileNavLink href="/berita" onClick={() => setIsMobileMenuOpen(false)}>Berita</MobileNavLink>
-                            <MobileNavLink href="/tantangan" onClick={() => setIsMobileMenuOpen(false)}>Tantangan</MobileNavLink>
 
                             <div className="border-t border-border my-4"></div>
 
