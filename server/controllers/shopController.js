@@ -133,8 +133,6 @@ const deleteShop = async (req, res) => {
     }
 };
 
-};
-
 // @desc    Add product to shop
 // @route   POST /api/shops/:id/products
 // @access  Private
