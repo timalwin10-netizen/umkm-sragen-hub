@@ -40,8 +40,8 @@ export default function Navbar() {
         >
             <div className="container mx-auto px-4 flex justify-between items-center">
                 <Link href="/" className="flex items-center gap-2 group">
-                    <span className="text-2xl font-bold gradient-text">UMKM</span>
-                    <span className="text-2xl font-bold text-foreground">Sragen</span>
+                    <span className="text-2xl font-bold gradient-text">GERAI</span>
+                    <span className="text-2xl font-bold text-foreground">UMKM SRAGEN</span>
                 </Link>
 
                 <div className="hidden md:flex items-center gap-8">
