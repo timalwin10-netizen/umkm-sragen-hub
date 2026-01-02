@@ -15,7 +15,7 @@ export default function WelcomeScreen() {
 
     // Audio ref
     const audioRef = useRef<HTMLAudioElement | null>(null);
-    const requestRef = useRef<number>();
+    const requestRef = useRef<number | null>(null);
 
     // Setup Audio
     useEffect(() => {
