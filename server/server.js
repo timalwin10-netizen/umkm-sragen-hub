@@ -7,6 +7,7 @@ const shopRoutes = require('./routes/shopRoutes');
 const challengeRoutes = require('./routes/challengeRoutes');
 const newsRoutes = require('./routes/newsRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 const path = require('path');
 
 console.log('--- SERVER INITIALIZING ---');
@@ -83,6 +84,7 @@ app.use('/api/shops', shopRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/upload', uploadRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Global Error Handler
 app.use((err, req, res, next) => {
