@@ -122,8 +122,8 @@ export default function DashboardPage() {
                     <FadeIn>
                         <div
                             className={`px-4 py-3 rounded-xl mb-6 ${message.includes('berhasil')
-                                    ? 'bg-primary/10 border border-primary/30 text-primary'
-                                    : 'bg-red-500/10 border border-red-500/30 text-red-500'
+                                ? 'bg-primary/10 border border-primary/30 text-primary'
+                                : 'bg-red-500/10 border border-red-500/30 text-red-500'
                                 }`}
                         >
                             {message}
@@ -237,7 +237,154 @@ export default function DashboardPage() {
                         </form>
                     </SpotlightCard>
                 </FadeIn>
+
+                {/* Product Management Section - Only show if shop exists */}
+                {shop && (
+                    <FadeIn delay={0.2}>
+                        <SpotlightCard className="p-8 mt-8">
+                            <h2 className="text-xl font-bold text-foreground mb-6">
+                                📦 Kelola Produk
+                            </h2>
+
+                            {/* Add Product Form */}
+                            <ProductForm shopId={shop._id} onProductAdded={() => fetchShop(shop._id)} />
+
+                            {/* Product List */}
+                            <div className="mt-8">
+                                <h3 className="text-lg font-semibold text-foreground mb-4">
+                                    Daftar Produk ({shop.products?.length || 0})
+                                </h3>
+                                {shop.products && shop.products.length > 0 ? (
+                                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        {shop.products.map((product: any) => (
+                                            <ProductCard
+                                                key={product._id}
+                                                product={product}
+                                                shopId={shop._id}
+                                                onDelete={() => fetchShop(shop._id)}
+                                            />
+                                        ))}
+                                    </div>
+                                ) : (
+                                    <div className="text-center py-10 bg-muted/30 rounded-2xl border border-dashed border-border">
+                                        <p className="text-foreground/40">Belum ada produk. Tambahkan produk pertama Anda!</p>
+                                    </div>
+                                )}
+                            </div>
+                        </SpotlightCard>
+                    </FadeIn>
+                )}
             </div>
+        </div>
+    );
+}
+
+// Product Form Component
+function ProductForm({ shopId, onProductAdded }: { shopId: string; onProductAdded: () => void }) {
+    const [productForm, setProductForm] = useState({
+        name: '',
+        price: '',
+        description: '',
+        image: ''
+    });
+    const [saving, setSaving] = useState(false);
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSaving(true);
+        try {
+            await api.post(`/shops/${shopId}/products`, {
+                ...productForm,
+                price: Number(productForm.price)
+            });
+            setProductForm({ name: '', price: '', description: '', image: '' });
+            onProductAdded();
+        } catch (error) {
+            console.error(error);
+            alert('Gagal menambah produk');
+        } finally {
+            setSaving(false);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-4 p-4 bg-muted/30 rounded-xl">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <input
+                    type="text"
+                    placeholder="Nama Produk"
+                    value={productForm.name}
+                    onChange={(e) => setProductForm({ ...productForm, name: e.target.value })}
+                    className="px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition"
+                    required
+                />
+                <input
+                    type="number"
+                    placeholder="Harga (Rp)"
+                    value={productForm.price}
+                    onChange={(e) => setProductForm({ ...productForm, price: e.target.value })}
+                    className="px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition"
+                    required
+                />
+            </div>
+            <textarea
+                placeholder="Deskripsi Produk"
+                rows={3}
+                value={productForm.description}
+                onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition resize-none"
+            />
+            <input
+                type="text"
+                placeholder="URL Gambar Produk"
+                value={productForm.image}
+                onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
+                className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition"
+            />
+            <GradientButton className="w-full py-3">
+                {saving ? 'Menambahkan...' : '+ Tambah Produk'}
+            </GradientButton>
+        </form>
+    );
+}
+
+// Product Card Component
+function ProductCard({ product, shopId, onDelete }: { product: any; shopId: string; onDelete: () => void }) {
+    const [deleting, setDeleting] = useState(false);
+
+    const handleDelete = async () => {
+        if (!confirm('Yakin hapus produk ini?')) return;
+        setDeleting(true);
+        try {
+            await api.delete(`/shops/${shopId}/products/${product._id}`);
+            onDelete();
+        } catch (error) {
+            console.error(error);
+            alert('Gagal menghapus produk');
+        } finally {
+            setDeleting(false);
+        }
+    };
+
+    return (
+        <div className="p-4 bg-card border border-border rounded-xl hover:border-primary/50 transition">
+            {product.image && (
+                <img
+                    src={product.image}
+                    alt={product.name}
+                    className="w-full h-32 object-cover rounded-lg mb-3"
+                />
+            )}
+            <h4 className="font-bold text-foreground">{product.name}</h4>
+            <p className="text-primary font-semibold text-lg">Rp {product.price?.toLocaleString('id-ID')}</p>
+            <p className="text-foreground/60 text-sm mt-1 line-clamp-2">{product.description}</p>
+            <button
+                onClick={handleDelete}
+                disabled={deleting}
+                className="mt-3 text-red-500 hover:text-red-600 text-sm font-medium transition disabled:opacity-50"
+            >
+                {deleting ? 'Menghapus...' : '🗑️ Hapus'}
+            </button>
         </div>
     );
 }

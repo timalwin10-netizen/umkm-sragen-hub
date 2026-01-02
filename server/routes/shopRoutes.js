@@ -5,7 +5,9 @@ const {
     getShopById,
     createShop,
     updateShop,
-    deleteShop
+    deleteShop,
+    addProduct,
+    deleteProduct
 } = require('../controllers/shopController');
 const { protect, admin } = require('../middleware/authMiddleware');
 
@@ -17,5 +19,11 @@ router.route('/:id')
     .get(getShopById)
     .put(protect, updateShop)
     .delete(protect, admin, deleteShop);
+
+router.route('/:id/products')
+    .post(protect, addProduct);
+
+router.route('/:id/products/:productId')
+    .delete(protect, deleteProduct);
 
 module.exports = router;

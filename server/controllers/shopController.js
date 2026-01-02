@@ -133,10 +133,73 @@ const deleteShop = async (req, res) => {
     }
 };
 
+};
+
+// @desc    Add product to shop
+// @route   POST /api/shops/:id/products
+// @access  Private
+const addProduct = async (req, res) => {
+    try {
+        const shop = await Shop.findById(req.params.id);
+
+        if (shop) {
+            if (shop.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+                return res.status(401).json({ message: 'Not authorized' });
+            }
+
+            const { name, price, description, image } = req.body;
+
+            const product = {
+                name,
+                price,
+                description,
+                image
+            };
+
+            shop.products.push(product);
+            await shop.save();
+
+            res.status(201).json(shop);
+        } else {
+            res.status(404).json({ message: 'Shop not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+// @desc    Delete product from shop
+// @route   DELETE /api/shops/:id/products/:productId
+// @access  Private
+const deleteProduct = async (req, res) => {
+    try {
+        const shop = await Shop.findById(req.params.id);
+
+        if (shop) {
+            if (shop.user.toString() !== req.user._id.toString() && req.user.role !== 'admin') {
+                return res.status(401).json({ message: 'Not authorized' });
+            }
+
+            shop.products = shop.products.filter(
+                (product) => product._id.toString() !== req.params.productId
+            );
+
+            await shop.save();
+            res.json(shop);
+        } else {
+            res.status(404).json({ message: 'Shop not found' });
+        }
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
 module.exports = {
     getShops,
     getShopById,
     createShop,
     updateShop,
-    deleteShop
+    deleteShop,
+    addProduct,
+    deleteProduct
 };
