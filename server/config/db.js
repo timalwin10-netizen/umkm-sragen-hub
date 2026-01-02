@@ -22,37 +22,39 @@ const seedAdmin = async () => {
 
 const connectDB = async () => {
     try {
-        if (!process.env.MONGO_URI) {
-            console.log('No MONGO_URI found in environment variables.');
-            throw new Error('Local check');
-        }
-        console.log('Attempting to connect to MongoDB Atlas...');
-        await mongoose.connect(process.env.MONGO_URI, {
-            serverSelectionTimeoutMS: 5000
-        });
-        console.log(`MongoDB Connected: ${mongoose.connection.host}`);
-        await seedAdmin();
-    } catch (error) {
-        if (process.env.NODE_ENV === 'production') {
-            console.error(`CRITICAL: Failed to connect to production database: ${error.message}`);
-            // Don't exit in serverless environment, just let it throw or handle it
-            throw error;
-        }
+        const mongoURI = process.env.MONGO_URI;
 
-        console.log('Falling back to In-Memory Database...');
-        try {
+        if (!mongoURI) {
+            console.error('MONGO_URI is missing in environment variables!');
+            if (process.env.NODE_ENV === 'production') {
+                throw new Error('MONGO_URI must be defined in production');
+            }
+            // Local fallback
+            console.log('Falling back to In-Memory Database (Development)...');
             const { MongoMemoryServer } = require('mongodb-memory-server');
             const mongod = await MongoMemoryServer.create();
             const uri = mongod.getUri();
-
-            console.log(`In-Memory Database URI: ${uri}`);
             await mongoose.connect(uri);
-            console.log(`In-Memory MongoDB Connected`);
+            console.log('In-Memory MongoDB Connected');
             await seedAdmin();
-        } catch (memError) {
-            console.error(`Fatal Error: Could not connect to any database. ${memError.message}`);
-            process.exit(1);
+            return;
         }
+
+        console.log('Connecting to MongoDB Atlas...');
+        await mongoose.connect(mongoURI, {
+            serverSelectionTimeoutMS: 5000
+        });
+
+        console.log(`MongoDB Connected: ${mongoose.connection.host}`);
+        await seedAdmin();
+    } catch (error) {
+        console.error(`Database Connection Error: ${error.message}`);
+        // In local development, if everything fails, we still want to know
+        if (process.env.NODE_ENV !== 'production' && !process.env.MONGO_URI) {
+            console.log('Critical failure in local DB setup');
+        }
+        // In Vercel, we throw to let the function fail visibly or keep trying
+        throw error;
     }
 };
 

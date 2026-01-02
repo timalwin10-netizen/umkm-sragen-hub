@@ -10,6 +10,17 @@ const uploadRoutes = require('./routes/uploadRoutes');
 const path = require('path');
 
 dotenv.config();
+
+// Validation for critical environment variables
+if (process.env.NODE_ENV === 'production') {
+    if (!process.env.MONGO_URI) {
+        console.error('CRITICAL ERROR: MONGO_URI is not defined in environment variables.');
+    }
+    if (!process.env.JWT_SECRET) {
+        console.warn('WARNING: JWT_SECRET is not defined. Login will fail.');
+    }
+}
+
 connectDB();
 
 const app = express();
