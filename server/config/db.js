@@ -48,13 +48,11 @@ const connectDB = async () => {
         console.log(`MongoDB Connected: ${mongoose.connection.host}`);
         await seedAdmin();
     } catch (error) {
-        console.error(`Database Connection Error: ${error.message}`);
-        // In local development, if everything fails, we still want to know
-        if (process.env.NODE_ENV !== 'production' && !process.env.MONGO_URI) {
-            console.log('Critical failure in local DB setup');
+        console.error(`DATABASE CONNECTION ERROR: ${error.message}`);
+        // Log the error but don't throw, allowing the server to start and show our /api error message
+        if (process.env.NODE_ENV === 'production') {
+            console.error('Action required: Ensure MONGO_URI is correctly set in Vercel environment variables.');
         }
-        // In Vercel, we throw to let the function fail visibly or keep trying
-        throw error;
     }
 };
 
