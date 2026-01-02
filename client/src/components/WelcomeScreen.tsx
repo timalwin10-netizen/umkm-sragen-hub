@@ -96,8 +96,9 @@ export default function WelcomeScreen() {
         }
     }, [isVisible]);
 
-    // Desktop Only Check
-    if (isMobile) return null;
+    // Desktop Only Check (DEBUG: Commented out to force show)
+    console.log('WelcomeScreen Rendered. Mobile:', isMobile, 'Visible:', isVisible);
+    // if (isMobile) return null;
 
     // Removed from DOM after animation
     if (!isVisible) return null;
