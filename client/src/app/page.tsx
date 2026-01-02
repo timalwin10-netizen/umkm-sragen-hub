@@ -54,35 +54,39 @@ export default function Home() {
   return (
     <div className="relative">
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden -mt-20 pt-20">
-        {/* Static gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/5 to-accent/5" />
+      <section className="relative min-h-[90vh] md:min-h-screen flex items-center justify-center overflow-hidden -mt-20 pt-32 pb-20 md:pt-20 md:pb-0">
+        {/* Latar belakang gradien statis */}
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-secondary/10 to-accent/5" />
+
+        {/* Elemen dekoratif CSS */}
+        <div className="absolute top-1/4 -left-20 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-secondary/10 rounded-full blur-3xl animate-pulse delay-700" />
 
         <div className="relative z-10 text-center px-4 max-w-5xl mx-auto">
           <FadeIn>
-            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-sm font-medium mb-6">
-              🚀 Platform Digital UMKM Sragen
+            <span className="inline-block px-4 py-2 rounded-full bg-primary/10 border border-primary/30 text-primary text-xs sm:text-sm font-medium mb-4 sm:mb-6">
+              🚀 Platform Digital UMKM
             </span>
           </FadeIn>
 
-          <h1 className="text-5xl md:text-7xl font-bold mb-6 leading-tight">
-            <BlurText text="Majukan UMKM" className="text-foreground" />
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold mb-8 md:mb-10 leading-[1.2] sm:leading-tight">
+            <BlurText text="Majukan UMKM" className="text-foreground inline-block" />
             <br />
-            <BlurText text="Sragen Bersama" className="gradient-text" delay={0.1} />
+            <BlurText text="Sragen Bersama" className="gradient-text inline-block" delay={0.1} />
           </h1>
 
           <FadeIn delay={0.3}>
-            <p className="text-xl text-foreground/60 max-w-2xl mx-auto mb-10">
+            <p className="text-lg sm:text-xl text-foreground/80 max-w-2xl mx-auto mb-12 md:mb-16 leading-relaxed px-4">
               Temukan produk lokal terbaik, dukung UMKM daerah, dan jadilah bagian dari
               pertumbuhan ekonomi Sragen.
             </p>
           </FadeIn>
 
           <FadeIn delay={0.5}>
-            <div className="flex flex-wrap gap-4 justify-center">
+            <div className="flex flex-col sm:flex-row gap-6 sm:gap-4 justify-center items-center">
               <MagneticButton>
-                <Link href="/toko">
-                  <GradientButton>
+                <Link href="/toko" className="w-full sm:w-auto">
+                  <GradientButton className="w-full sm:w-auto px-10 py-4 text-lg">
                     Jelajahi Toko →
                   </GradientButton>
                 </Link>
@@ -90,7 +94,7 @@ export default function Home() {
               <MagneticButton>
                 <Link
                   href="/register"
-                  className="px-6 py-3 rounded-xl border border-border text-foreground font-semibold hover:bg-muted transition"
+                  className="w-full sm:w-auto px-10 py-4 rounded-xl border-2 border-border text-foreground font-semibold hover:bg-muted transition text-center text-lg"
                 >
                   Daftarkan UMKM
                 </Link>

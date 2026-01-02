@@ -39,9 +39,9 @@ export default function Navbar() {
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md border-b border-border py-4' : 'bg-transparent py-5'}`}
         >
             <div className="container mx-auto px-4 flex justify-between items-center">
-                <Link href="/" className="flex items-center gap-2 group">
-                    <span className="text-2xl font-bold gradient-text">GERAI</span>
-                    <span className="text-2xl font-bold text-foreground">UMKM SRAGEN</span>
+                <Link href="/" className="flex items-center gap-1.5 min-w-0 flex-shrink">
+                    <span className="text-xl md:text-2xl font-bold gradient-text whitespace-nowrap">GERAI</span>
+                    <span className="text-xl md:text-2xl font-bold text-foreground whitespace-nowrap overflow-hidden text-ellipsis">UMKM SRAGEN</span>
                 </Link>
 
                 {/* Secondary Navigation - Toko & Berita */}
@@ -50,13 +50,13 @@ export default function Navbar() {
                     <NavLink href="/berita">Berita</NavLink>
                 </div>
 
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 sm:gap-4 flex-shrink-0">
                     {/* Theme Toggle Button */}
                     <motion.button
                         whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                         onClick={toggleTheme}
-                        className="p-2.5 rounded-xl bg-muted border border-border hover:border-primary transition-colors flex items-center justify-center shadow-sm"
+                        className="p-2 sm:p-2.5 rounded-xl bg-muted border border-border hover:border-primary transition-colors flex items-center justify-center shadow-sm"
                         aria-label="Toggle theme"
                     >
                         <motion.div
@@ -65,11 +65,11 @@ export default function Navbar() {
                             transition={{ type: "spring", stiffness: 200, damping: 10 }}
                         >
                             {theme === 'light' ? (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary md:w-5 md:h-5">
                                     <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
                                 </svg>
                             ) : (
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-primary md:w-5 md:h-5">
                                     <circle cx="12" cy="12" r="5"></circle>
                                     <line x1="12" y1="1" x2="12" y2="3"></line>
                                     <line x1="12" y1="21" x2="12" y2="23"></line>
@@ -87,20 +87,20 @@ export default function Navbar() {
                     {/* Mobile Menu Button */}
                     <button
                         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                        className="md:hidden p-2 rounded-lg bg-muted border border-border hover:border-primary transition-colors"
+                        className="md:hidden p-2 rounded-lg bg-muted border border-border hover:border-primary transition-colors order-last ml-1"
                         aria-label="Toggle mobile menu"
                     >
                         <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
+                            width="20"
+                            height="20"
                             viewBox="0 0 24 24"
                             fill="none"
                             stroke="currentColor"
                             strokeWidth="2"
                             strokeLinecap="round"
                             strokeLinejoin="round"
-                            className="text-foreground"
+                            className="text-foreground md:w-6 md:h-6"
                         >
                             {isMobileMenuOpen ? (
                                 <path d="M18 6L6 18M6 6l12 12" />
@@ -115,38 +115,32 @@ export default function Navbar() {
                     </button>
 
                     {user ? (
-                        <>
+                        <div className="hidden sm:flex items-center gap-4">
                             <span className="text-sm text-muted-foreground hidden md:block">
                                 Halo, <span className="text-primary">{user.name}</span>
                             </span>
                             <Link
                                 href="/dashboard"
-                                className="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 transition font-medium"
+                                className="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 transition font-medium text-sm"
                             >
                                 Dashboard
                             </Link>
-                            <button
-                                onClick={logout}
-                                className="text-muted-foreground hover:text-red-500 text-sm transition"
-                            >
-                                Logout
-                            </button>
-                        </>
+                        </div>
                     ) : (
-                        <>
+                        <div className="hidden sm:flex items-center gap-2">
                             <Link
                                 href="/login"
-                                className="px-4 py-2 text-foreground/70 hover:text-foreground transition"
+                                className="px-3 py-2 text-sm text-foreground/70 hover:text-foreground transition"
                             >
                                 Masuk
                             </Link>
                             <Link
                                 href="/register"
-                                className="px-5 py-2 rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg hover:shadow-primary/25 transition"
+                                className="px-4 py-2 text-sm rounded-xl bg-gradient-to-r from-primary to-secondary text-white font-semibold hover:shadow-lg hover:shadow-primary/25 transition"
                             >
                                 Daftar
                             </Link>
-                        </>
+                        </div>
                     )}
                 </div>
             </div>
