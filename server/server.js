@@ -59,11 +59,45 @@ app.get(['/', '/api'], (req, res) => {
     res.send('API is running...');
 });
 
+// Diagnostic Endpoints
+app.get('/api/health', (req, res) => {
+    res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
+});
+
+app.get('/api/debug', (req, res) => {
+    res.json({
+        env: process.env.NODE_ENV,
+        hasMongoUri: !!process.env.MONGO_URI,
+        hasJwtSecret: !!process.env.JWT_SECRET,
+        nodeVersion: process.version,
+        vercel: !!process.env.VERCEL
+    });
+});
+
 app.use('/api/auth', authRoutes);
 app.use('/api/shops', shopRoutes);
 app.use('/api/challenges', challengeRoutes);
 app.use('/api/news', newsRoutes);
 app.use('/api/upload', uploadRoutes);
+
+// Global Error Handler
+app.use((err, req, res, next) => {
+    console.error('Unhandled Error:', err.message);
+    res.status(err.status || 500).json({
+        message: err.message || 'Internal Server Error',
+        stack: process.env.NODE_ENV === 'production' ? null : err.stack
+    });
+});
+
+// Catch-all for uncaught exceptions and rejections
+process.on('uncaughtException', (err) => {
+    console.error('CRITICAL: Uncaught Exception:', err.message);
+    // In serverless, we don't necessarily want to exit(1) as it kills the instance
+});
+
+process.on('unhandledRejection', (reason, promise) => {
+    console.error('CRITICAL: Unhandled Rejection at:', promise, 'reason:', reason);
+});
 
 app.use('/uploads', express.static(path.join(__dirname, '/uploads')));
 
