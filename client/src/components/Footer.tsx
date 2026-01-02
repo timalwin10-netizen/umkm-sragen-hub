@@ -28,11 +28,6 @@ export default function Footer() {
                                     Berita
                                 </Link>
                             </li>
-                            <li>
-                                <Link href="/tantangan" className="text-foreground/60 hover:text-primary transition">
-                                    Tantangan
-                                </Link>
-                            </li>
                         </ul>
                     </div>
 
