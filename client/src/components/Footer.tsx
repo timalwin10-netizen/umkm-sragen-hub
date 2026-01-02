@@ -36,7 +36,6 @@ export default function Footer() {
                         <ul className="space-y-2 text-foreground/60">
                             <li>📍 Sragen, Jawa Tengah</li>
                             <li>📧 timalwin@gmail.com</li>
-                            <li>📞 +62 812 3456 7890</li>
                         </ul>
                     </div>
                 </div>
