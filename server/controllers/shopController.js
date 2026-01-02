@@ -106,19 +106,20 @@ const updateShop = async (req, res) => {
     }
 };
 
-// @desc    Delete shop
-// @route   DELETE /api/shops/:id
-// @access  Private/Admin
 const deleteShop = async (req, res) => {
     try {
         const shop = await Shop.findById(req.params.id);
 
         if (shop) {
-            if (req.user.role === 'admin') { // Only admin can delete for now, or owner? Logic says Admin deletes violators
-                await shop.remove();
+            if (req.user.role === 'admin') {
+                await shop.deleteOne();
 
-                // Remove reference from user? Optional but good practice
-                // ... logic to find user and unset shop_details
+                // Remove reference from user
+                const user = await User.findById(shop.user);
+                if (user && user.shop_details) {
+                    user.shop_details = null;
+                    await user.save();
+                }
 
                 res.json({ message: 'Shop removed' });
             } else {
