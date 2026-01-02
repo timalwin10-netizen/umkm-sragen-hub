@@ -33,7 +33,6 @@ const allowedOrigins = [
 
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow requests with no origin (mobile apps, Postman, etc)
         if (!origin) return callback(null, true);
         if (allowedOrigins.indexOf(origin) !== -1 || origin.endsWith('.vercel.app')) {
             callback(null, true);
@@ -44,6 +43,17 @@ app.use(cors({
     credentials: true
 }));
 app.use(express.json());
+
+// Check for missing environment variables before processing any /api request
+app.use('/api', (req, res, next) => {
+    if (process.env.NODE_ENV === 'production' && !process.env.MONGO_URI) {
+        return res.status(500).json({
+            message: 'DATABASE_CONFIG_MISSING: MONGO_URI is not set in Vercel Environment Variables.',
+            instruction: 'Please add MONGO_URI in project settings -> Environment Variables and Redeploy.'
+        });
+    }
+    next();
+});
 
 app.get(['/', '/api'], (req, res) => {
     res.send('API is running...');
