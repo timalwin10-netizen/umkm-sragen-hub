@@ -9,7 +9,9 @@ const newsRoutes = require('./routes/newsRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
 const path = require('path');
 
+console.log('--- SERVER INITIALIZING ---');
 dotenv.config();
+console.log('Dotenv configured');
 
 // Validation for critical environment variables
 if (process.env.NODE_ENV === 'production') {
@@ -21,9 +23,11 @@ if (process.env.NODE_ENV === 'production') {
     }
 }
 
-connectDB();
-
 const app = express();
+console.log('Express app instance created');
+
+connectDB();
+console.log('Database connection initiated');
 
 // CORS configuration
 const allowedOrigins = [
