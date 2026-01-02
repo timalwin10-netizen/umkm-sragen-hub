@@ -25,22 +25,10 @@ const connectDB = async () => {
         const mongoURI = process.env.MONGO_URI;
 
         if (!mongoURI) {
-            console.error('MONGO_URI is missing in environment variables!');
-            if (process.env.NODE_ENV === 'production') {
-                throw new Error('MONGO_URI must be defined in production');
-            }
-            // Local fallback
-            console.log('Falling back to In-Memory Database (Development)...');
-            const { MongoMemoryServer } = require('mongodb-memory-server');
-            const mongod = await MongoMemoryServer.create();
-            const uri = mongod.getUri();
-            await mongoose.connect(uri);
-            console.log('In-Memory MongoDB Connected');
-            await seedAdmin();
-            return;
+            console.error('DATABASE ERROR: MONGO_URI env var is missing.');
+            return; // Don't throw, let server start
         }
 
-        console.log('Connecting to MongoDB Atlas...');
         await mongoose.connect(mongoURI, {
             serverSelectionTimeoutMS: 5000
         });
@@ -48,11 +36,7 @@ const connectDB = async () => {
         console.log(`MongoDB Connected: ${mongoose.connection.host}`);
         await seedAdmin();
     } catch (error) {
-        console.error(`DATABASE CONNECTION ERROR: ${error.message}`);
-        // Log the error but don't throw, allowing the server to start and show our /api error message
-        if (process.env.NODE_ENV === 'production') {
-            console.error('Action required: Ensure MONGO_URI is correctly set in Vercel environment variables.');
-        }
+        console.error(`DATABASE ERROR: ${error.message}`);
     }
 };
 
