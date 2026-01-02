@@ -39,9 +39,12 @@ export default function Navbar() {
             className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${scrolled ? 'bg-background/80 backdrop-blur-md border-b border-border py-4' : 'bg-transparent py-5'}`}
         >
             <div className="container mx-auto px-4 flex justify-between items-center">
-                <Link href="/" className="flex items-center gap-2 group">
-                    <span className="text-2xl font-bold gradient-text">GERAI</span>
-                    <span className="text-2xl font-bold text-foreground">UMKM SRAGEN</span>
+                <Link href="/" className="flex items-center gap-3 group">
+                    <img
+                        src="/logo-gerai-umkm.png"
+                        alt="Gerai UMKM Sragen"
+                        className="h-10 w-auto object-contain"
+                    />
                 </Link>
 
                 <div className="hidden md:flex items-center gap-8">
