@@ -35,7 +35,7 @@ export default function Footer() {
                         <h4 className="text-foreground font-semibold mb-4">Kontak</h4>
                         <ul className="space-y-2 text-foreground/60">
                             <li>📍 Sragen, Jawa Tengah</li>
-                            <li>📧 info@umkmsragen.id</li>
+                            <li>📧 timalwin@gmail.com</li>
                             <li>📞 +62 812 3456 7890</li>
                         </ul>
                     </div>
