@@ -120,6 +120,12 @@ export default function Navbar() {
                                 Halo, <span className="text-primary">{user.name}</span>
                             </span>
                             <Link
+                                href="/akun"
+                                className="text-sm text-foreground/70 hover:text-primary transition font-medium mr-2"
+                            >
+                                Akun
+                            </Link>
+                            <Link
                                 href="/dashboard"
                                 className="px-4 py-2 rounded-lg bg-primary/10 text-primary border border-primary/30 hover:bg-primary/20 transition font-medium text-sm"
                             >
@@ -173,6 +179,7 @@ export default function Navbar() {
                                     <div className="px-4 py-2 text-sm text-muted-foreground">
                                         Halo, <span className="text-primary font-medium">{user.name}</span>
                                     </div>
+                                    <MobileNavLink href="/akun" onClick={() => setIsMobileMenuOpen(false)}>Pengaturan Akun</MobileNavLink>
                                     <MobileNavLink href="/dashboard" onClick={() => setIsMobileMenuOpen(false)}>Dashboard</MobileNavLink>
                                     <button
                                         onClick={() => {
