@@ -51,7 +51,7 @@ export default function BeritaPage() {
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 flex justify-center flex-wrap items-center">
                             <BlurText text="Berita" className="text-foreground" />
                             <span className="mx-2"> </span>
-                            <BlurText text="Terkini" className="gradient-text" delay={0.1} />
+                            <BlurText text="Terkini" className="text-primary" delay={0.1} />
                         </h1>
                         <p className="text-foreground/60 max-w-2xl mx-auto">
                             Ikuti perkembangan terbaru dari dunia UMKM Sragen. Inspirasi, tips, dan berita terkini untuk pelaku usaha.

@@ -54,7 +54,7 @@ export default function TokoPage() {
                         <h1 className="text-4xl md:text-5xl font-bold mb-4 flex justify-center flex-wrap items-center">
                             <BlurText text="Toko" className="text-foreground" />
                             <span className="mx-2"> </span>
-                            <BlurText text="UMKM" className="gradient-text" delay={0.1} />
+                            <BlurText text="UMKM" className="text-primary" delay={0.1} />
                         </h1>
                         <p className="text-foreground/60 max-w-2xl mx-auto">
                             Temukan berbagai produk dan jasa dari UMKM Sragen. Dukung ekonomi lokal dengan berbelanja dari pelaku usaha daerah.
