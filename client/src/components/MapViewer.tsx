@@ -5,17 +5,7 @@ import L from 'leaflet';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 
-// Fix Leaflet icon issue
-const defaultIcon = L.icon({
-    iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
-    shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
-    iconSize: [25, 41],
-    iconAnchor: [12, 41],
-    popupAnchor: [1, -34],
-    shadowSize: [41, 41]
-});
-
-L.Marker.prototype.options.icon = defaultIcon;
+// Leaflet icon fix is handled inside component to avoid SSR issues
 
 interface Shop {
     _id: string;
@@ -34,6 +24,19 @@ interface MapViewerProps {
 export default function MapViewer({ shops }: MapViewerProps) {
     const router = useRouter();
     const defaultCenter: [number, number] = [-7.4279, 111.0188]; // Sragen Center
+
+    useEffect(() => {
+        // Fix Leaflet icon issue on client side only
+        const defaultIcon = L.icon({
+            iconUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-icon.png',
+            shadowUrl: 'https://unpkg.com/leaflet@1.7.1/dist/images/marker-shadow.png',
+            iconSize: [25, 41],
+            iconAnchor: [12, 41],
+            popupAnchor: [1, -34],
+            shadowSize: [41, 41]
+        });
+        L.Marker.prototype.options.icon = defaultIcon;
+    }, []);
 
     return (
         <div className="h-[600px] w-full rounded-2xl overflow-hidden shadow-lg border border-border z-0 relative">
