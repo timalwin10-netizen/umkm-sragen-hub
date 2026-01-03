@@ -17,6 +17,7 @@ export default function AdminDashboard() {
     const [stats, setStats] = useState({ users: 0, shops: 0, news: 0 });
     const [newsList, setNewsList] = useState([]);
     const [shops, setShops] = useState([]);
+    const [users, setUsers] = useState([]);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
@@ -40,14 +41,16 @@ export default function AdminDashboard() {
 
     const fetchData = async () => {
         try {
-            const [newsRes, shopsRes, statsRes] = await Promise.all([
+            const [newsRes, shopsRes, statsRes, usersRes] = await Promise.all([
                 api.get('/news'),
                 api.get('/shops'),
-                api.get('/admin/stats')
+                api.get('/admin/stats'),
+                api.get('/admin/users')
             ]);
             setNewsList(newsRes.data);
             setShops(shopsRes.data);
             setStats(statsRes.data);
+            setUsers(usersRes.data);
         } catch (error) {
             console.error(error);
         } finally {
@@ -87,6 +90,18 @@ export default function AdminDashboard() {
         }
     };
 
+    const handleDeleteUser = async (id: string) => {
+        if (!confirm('Yakin hapus pengguna ini?')) return;
+        try {
+            await api.delete(`/admin/users/${id}`);
+            setMessage('Pengguna berhasil dihapus');
+            fetchData();
+        } catch (error) {
+            console.error(error);
+            setMessage('Gagal menghapus pengguna');
+        }
+    };
+
     if (loading) {
         return (
             <div className="min-h-screen flex items-center justify-center pt-20">
@@ -101,6 +116,7 @@ export default function AdminDashboard() {
         { id: 'stats', label: 'Ringkasan', icon: '📊' },
         { id: 'news', label: 'Kelola Berita', icon: '📰' },
         { id: 'shops', label: 'Kelola Toko', icon: '🏪' },
+        { id: 'users', label: 'Kelola Akun', icon: '👥' },
     ];
 
     return (
@@ -306,6 +322,63 @@ export default function AdminDashboard() {
                                     <p className="text-foreground/40 font-medium">Belum ada toko terdaftar</p>
                                 </div>
                             )}
+                        </div>
+                    </FadeIn>
+                )}
+
+                {/* Users Tab */}
+                {activeTab === 'users' && (
+                    <FadeIn delay={0.2}>
+                        <div>
+                            <h2 className="text-xl font-bold text-foreground mb-4">Daftar Pengguna ({users.length})</h2>
+                            <div className="bg-card/50 rounded-2xl border border-border overflow-hidden">
+                                <div className="overflow-x-auto">
+                                    <table className="w-full">
+                                        <thead>
+                                            <tr className="border-b border-border bg-muted/30 text-left">
+                                                <th className="p-4 font-semibold text-foreground/70 text-sm">Nama</th>
+                                                <th className="p-4 font-semibold text-foreground/70 text-sm">Email</th>
+                                                <th className="p-4 font-semibold text-foreground/70 text-sm">Role</th>
+                                                <th className="p-4 font-semibold text-foreground/70 text-sm text-right">Aksi</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {users.length > 0 ? (
+                                                users.map((u: any) => (
+                                                    <tr key={u._id} className="border-b border-border hover:bg-muted/30 transition">
+                                                        <td className="p-4 text-foreground font-medium">{u.name}</td>
+                                                        <td className="p-4 text-foreground/70">{u.email}</td>
+                                                        <td className="p-4">
+                                                            <span className={`px-2 py-1 rounded-md text-xs font-medium ${u.role === 'admin'
+                                                                    ? 'bg-primary/10 text-primary'
+                                                                    : 'bg-muted text-foreground/60'
+                                                                }`}>
+                                                                {u.role.toUpperCase()}
+                                                            </span>
+                                                        </td>
+                                                        <td className="p-4 text-right">
+                                                            {u._id !== user._id && (
+                                                                <button
+                                                                    onClick={() => handleDeleteUser(u._id)}
+                                                                    className="text-red-500 hover:text-red-600 text-sm font-medium transition hover:bg-red-50 px-3 py-1.5 rounded-lg"
+                                                                >
+                                                                    Hapus
+                                                                </button>
+                                                            )}
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan={4} className="p-8 text-center text-foreground/40">
+                                                        Tidak ada data pengguna
+                                                    </td>
+                                                </tr>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </FadeIn>
                 )}
