@@ -116,9 +116,6 @@ export default function Navbar() {
 
                     {user ? (
                         <div className="hidden sm:flex items-center gap-4">
-                            <span className="text-sm text-muted-foreground hidden md:block">
-                                Halo, <span className="text-primary">{user.name}</span>
-                            </span>
                             <Link
                                 href="/akun"
                                 className="px-3 py-2 rounded-lg text-sm font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/20 transition flex items-center gap-2"
@@ -135,6 +132,9 @@ export default function Navbar() {
                             >
                                 Dashboard
                             </Link>
+                            <span className="text-sm text-muted-foreground hidden md:block">
+                                Halo, <span className="text-primary">{user.name}</span>
+                            </span>
                         </div>
                     ) : (
                         <div className="hidden sm:flex items-center gap-2">
