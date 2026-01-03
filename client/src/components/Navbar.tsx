@@ -121,9 +121,13 @@ export default function Navbar() {
                             </span>
                             <Link
                                 href="/akun"
-                                className="text-sm text-foreground/70 hover:text-primary transition font-medium mr-2"
+                                className="px-3 py-2 rounded-lg text-sm font-medium text-foreground/70 hover:text-primary hover:bg-primary/5 border border-transparent hover:border-primary/20 transition flex items-center gap-2"
                             >
-                                Akun
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                                    <circle cx="12" cy="7" r="4"></circle>
+                                </svg>
+                                <span>Akun</span>
                             </Link>
                             <Link
                                 href="/dashboard"
