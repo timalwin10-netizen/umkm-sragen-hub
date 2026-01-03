@@ -5,6 +5,8 @@ import api from '@/utils/api';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import FadeIn from '@/components/reactbits/FadeIn';
 import BlurText from '@/components/reactbits/BlurText';
+import Image from 'next/image';
+import { getImageUrl } from '@/utils/media';
 
 interface Shop {
     _id: string;
@@ -79,8 +81,8 @@ export default function TokoPage() {
                                     key={cat}
                                     onClick={() => setSelectedCategory(cat === 'Semua' ? '' : cat)}
                                     className={`px-4 py-2 rounded-lg text-sm font-medium transition ${(cat === 'Semua' && selectedCategory === '') || selectedCategory === cat
-                                            ? 'bg-primary text-white'
-                                            : 'bg-card border border-border text-foreground/60 hover:border-primary hover:text-primary'
+                                        ? 'bg-primary text-white'
+                                        : 'bg-card border border-border text-foreground/60 hover:border-primary hover:text-primary'
                                         }`}
                                 >
                                     {cat}
@@ -103,11 +105,13 @@ export default function TokoPage() {
                             <FadeIn key={shop._id} delay={index * 0.05}>
                                 <Link href={`/toko/${shop._id}`}>
                                     <SpotlightCard className="group cursor-pointer h-full">
-                                        <div className="h-48 overflow-hidden rounded-t-2xl">
-                                            <img
-                                                src={shop.image || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=UMKM'}
+                                        <div className="h-48 overflow-hidden rounded-t-2xl relative">
+                                            <Image
+                                                src={getImageUrl(shop.image) || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=UMKM'}
                                                 alt={shop.name}
-                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                                fill
+                                                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                             />
                                         </div>
                                         <div className="p-5">

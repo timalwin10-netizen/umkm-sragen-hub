@@ -9,6 +9,7 @@ import GradientButton from '@/components/reactbits/GradientButton';
 import MagneticButton from '@/components/reactbits/MagneticButton';
 import Image from 'next/image';
 import { useIsMobile } from '@/hooks/useIsMobile';
+import { getImageUrl } from '@/utils/media';
 
 
 interface Shop {
@@ -171,7 +172,7 @@ export default function Home() {
                     <SpotlightCard className="group cursor-pointer">
                       <div className="h-48 overflow-hidden rounded-t-2xl relative">
                         <Image
-                          src={shop.image || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=UMKM'}
+                          src={getImageUrl(shop.image) || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=UMKM'}
                           alt={shop.name}
                           fill
                           className="object-cover group-hover:scale-110 transition-transform duration-500"
@@ -245,7 +246,7 @@ export default function Home() {
                     <div className="bg-card rounded-2xl border border-border overflow-hidden cursor-pointer hover:shadow-lg transition-shadow h-full">
                       <div className="h-32 overflow-hidden relative">
                         <Image
-                          src={item.image || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=News'}
+                          src={getImageUrl(item.image) || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=News'}
                           alt={item.title}
                           fill
                           className="object-cover"
@@ -275,7 +276,7 @@ export default function Home() {
                       <SpotlightCard className="group cursor-pointer h-full">
                         <div className="h-48 overflow-hidden rounded-t-2xl relative">
                           <Image
-                            src={item.image || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=News'}
+                            src={getImageUrl(item.image) || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=News'}
                             alt={item.title}
                             fill
                             className="object-cover group-hover:scale-110 transition-transform duration-500"

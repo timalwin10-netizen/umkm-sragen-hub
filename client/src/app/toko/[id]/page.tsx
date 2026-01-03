@@ -6,6 +6,8 @@ import api from '@/utils/api';
 import FadeIn from '@/components/reactbits/FadeIn';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import GradientButton from '@/components/reactbits/GradientButton';
+import Image from 'next/image';
+import { getImageUrl } from '@/utils/media';
 
 interface Shop {
     _id: string;
@@ -78,10 +80,12 @@ export default function ShopDetailPage() {
                 {/* Banner */}
                 <FadeIn>
                     <div className="relative h-64 md:h-80 rounded-2xl overflow-hidden mb-8 border border-border">
-                        <img
-                            src={shop.image || 'https://placehold.co/1200x400/f5f0e8/8b5a2b?text=UMKM'}
+                        <Image
+                            src={getImageUrl(shop.image) || 'https://placehold.co/1200x400/f5f0e8/8b5a2b?text=UMKM'}
                             alt={shop.name}
-                            className="w-full h-full object-cover"
+                            fill
+                            className="object-cover"
+                            priority
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 via-transparent to-transparent" />
                     </div>
@@ -113,11 +117,12 @@ export default function ShopDetailPage() {
                                     <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                                         {shop.products.map((product: any, index: number) => (
                                             <div key={index} className="bg-muted/50 rounded-xl p-4 border border-border">
-                                                <div className="h-32 rounded-lg bg-card mb-3 overflow-hidden">
-                                                    <img
-                                                        src={product.image || 'https://placehold.co/200x200/f5f0e8/8b5a2b?text=Produk'}
+                                                <div className="h-32 rounded-lg bg-card mb-3 overflow-hidden relative">
+                                                    <Image
+                                                        src={getImageUrl(product.image) || 'https://placehold.co/200x200/f5f0e8/8b5a2b?text=Produk'}
                                                         alt={product.name}
-                                                        className="w-full h-full object-cover"
+                                                        fill
+                                                        className="object-cover"
                                                     />
                                                 </div>
                                                 <h3 className="font-medium text-foreground text-sm">{product.name}</h3>

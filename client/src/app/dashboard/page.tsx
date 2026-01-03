@@ -6,6 +6,9 @@ import FadeIn from '@/components/reactbits/FadeIn';
 import BlurText from '@/components/reactbits/BlurText';
 import GradientButton from '@/components/reactbits/GradientButton';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
+import ImageUpload from '@/components/ImageUpload';
+import Image from 'next/image';
+import { getImageUrl } from '@/utils/media';
 
 export default function DashboardPage() {
     const [user, setUser] = useState<any>(null);
@@ -193,16 +196,11 @@ export default function DashboardPage() {
                                     />
                                 </div>
 
-                                <div>
-                                    <label className="block text-foreground/80 text-sm font-medium mb-2">URL Gambar Banner</label>
-                                    <input
-                                        type="text"
-                                        value={formData.image}
-                                        onChange={(e) => setFormData({ ...formData, image: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl bg-muted border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition"
-                                        placeholder="https://..."
-                                    />
-                                </div>
+                                <ImageUpload
+                                    label="Gambar Banner Toko"
+                                    currentImage={formData.image}
+                                    onUploadSuccess={(url) => setFormData({ ...formData, image: url })}
+                                />
                             </div>
 
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -334,12 +332,10 @@ function ProductForm({ shopId, onProductAdded }: { shopId: string; onProductAdde
                 onChange={(e) => setProductForm({ ...productForm, description: e.target.value })}
                 className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition resize-none"
             />
-            <input
-                type="text"
-                placeholder="URL Gambar Produk"
-                value={productForm.image}
-                onChange={(e) => setProductForm({ ...productForm, image: e.target.value })}
-                className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition"
+            <ImageUpload
+                label="Gambar Produk"
+                currentImage={productForm.image}
+                onUploadSuccess={(url) => setProductForm({ ...productForm, image: url })}
             />
             <GradientButton className="w-full py-3">
                 {saving ? 'Menambahkan...' : '+ Tambah Produk'}
@@ -369,11 +365,14 @@ function ProductCard({ product, shopId, onDelete }: { product: any; shopId: stri
     return (
         <div className="p-4 bg-card border border-border rounded-xl hover:border-primary/50 transition">
             {product.image && (
-                <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-32 object-cover rounded-lg mb-3"
-                />
+                <div className="relative w-full h-32 mb-3 rounded-lg overflow-hidden border border-border">
+                    <Image
+                        src={getImageUrl(product.image)}
+                        alt={product.name}
+                        fill
+                        className="object-cover"
+                    />
+                </div>
             )}
             <h4 className="font-bold text-foreground">{product.name}</h4>
             <p className="text-primary font-semibold text-lg">Rp {product.price?.toLocaleString('id-ID')}</p>

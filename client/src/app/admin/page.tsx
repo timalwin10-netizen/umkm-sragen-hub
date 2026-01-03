@@ -7,6 +7,9 @@ import FadeIn from '@/components/reactbits/FadeIn';
 import BlurText from '@/components/reactbits/BlurText';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import GradientButton from '@/components/reactbits/GradientButton';
+import ImageUpload from '@/components/ImageUpload';
+import Image from 'next/image';
+import { getImageUrl } from '@/utils/media';
 
 export default function AdminDashboard() {
     const [user, setUser] = useState<any>(null);
@@ -237,12 +240,10 @@ export default function AdminDashboard() {
                                         className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:outline-none transition resize-none"
                                         required
                                     />
-                                    <input
-                                        type="text"
-                                        placeholder="URL Gambar Berita"
-                                        value={newsForm.image}
-                                        onChange={(e) => setNewsForm({ ...newsForm, image: e.target.value })}
-                                        className="w-full px-4 py-3 rounded-xl bg-muted/50 border border-border text-foreground placeholder-foreground/40 focus:border-primary focus:ring-1 focus:ring-primary/20 focus:outline-none transition shadow-sm"
+                                    <ImageUpload
+                                        label="Gambar Berita"
+                                        currentImage={newsForm.image}
+                                        onUploadSuccess={(url) => setNewsForm({ ...newsForm, image: url })}
                                     />
                                     <GradientButton className="w-full py-3">Tambah Berita</GradientButton>
                                 </form>

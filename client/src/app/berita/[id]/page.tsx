@@ -6,6 +6,8 @@ import api from '@/utils/api';
 import FadeIn from '@/components/reactbits/FadeIn';
 import SpotlightCard from '@/components/reactbits/SpotlightCard';
 import GradientButton from '@/components/reactbits/GradientButton';
+import Image from 'next/image';
+import { getImageUrl } from '@/utils/media';
 
 interface News {
     _id: string;
@@ -95,10 +97,12 @@ export default function NewsDetailPage() {
 
                         {/* Featured Image */}
                         <div className="relative h-64 md:h-96 rounded-2xl overflow-hidden mb-8 border border-border mt-4">
-                            <img
-                                src={news.image || 'https://placehold.co/1200x600/f5f0e8/8b5a2b?text=News'}
+                            <Image
+                                src={getImageUrl(news.image) || 'https://placehold.co/1200x600/f5f0e8/8b5a2b?text=News'}
                                 alt={news.title}
-                                className="w-full h-full object-cover"
+                                fill
+                                className="object-cover"
+                                priority
                             />
                         </div>
 
