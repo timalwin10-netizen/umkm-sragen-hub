@@ -13,6 +13,8 @@ const shopSchema = mongoose.Schema({
     description: { type: String, required: true },
     category: { type: String, required: true }, // e.g., 'Kuliner', 'Kerajinan', 'Fashion'
     location: { type: String, required: true, default: 'Sragen' },
+    latitude: { type: Number, default: -7.4279 },
+    longitude: { type: Number, default: 111.0188 },
     image: { type: String }, // Shop banner/logo
     products: [productSchema],
     contact: {

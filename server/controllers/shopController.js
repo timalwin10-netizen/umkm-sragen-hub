@@ -45,7 +45,7 @@ const getShopById = async (req, res) => {
 // @access  Private
 const createShop = async (req, res) => {
     try {
-        const { name, description, category, location, contact, image } = req.body;
+        const { name, description, category, location, latitude, longitude, contact, image } = req.body;
 
         const shopExists = await Shop.findOne({ user: req.user._id });
 
@@ -59,6 +59,8 @@ const createShop = async (req, res) => {
             description,
             category,
             location,
+            latitude: latitude || -7.4279,
+            longitude: longitude || 111.0188,
             contact,
             image,
             products: []
@@ -93,6 +95,8 @@ const updateShop = async (req, res) => {
             shop.description = req.body.description || shop.description;
             shop.category = req.body.category || shop.category;
             shop.location = req.body.location || shop.location;
+            shop.latitude = req.body.latitude || shop.latitude;
+            shop.longitude = req.body.longitude || shop.longitude;
             shop.image = req.body.image || shop.image;
             shop.contact = req.body.contact || shop.contact;
 

@@ -7,6 +7,12 @@ import FadeIn from '@/components/reactbits/FadeIn';
 import BlurText from '@/components/reactbits/BlurText';
 import Image from 'next/image';
 import { getImageUrl } from '@/utils/media';
+import dynamic from 'next/dynamic';
+
+const MapViewer = dynamic(() => import('@/components/MapViewer'), {
+    ssr: false,
+    loading: () => <div className="h-[600px] w-full bg-muted animate-pulse rounded-2xl" />
+});
 
 interface Shop {
     _id: string;
@@ -14,6 +20,8 @@ interface Shop {
     description: string;
     category: string;
     location: string;
+    latitude?: number;
+    longitude?: number;
     image: string;
 }
 
@@ -22,6 +30,7 @@ export default function TokoPage() {
     const [loading, setLoading] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedCategory, setSelectedCategory] = useState('');
+    const [viewMode, setViewMode] = useState<'list' | 'map'>('list');
 
     const categories = ['Semua', 'Kuliner', 'Kerajinan', 'Fashion', 'Pertanian', 'Jasa', 'Lainnya'];
 
@@ -92,55 +101,84 @@ export default function TokoPage() {
                     </div>
                 </FadeIn>
 
-                {/* Shop Grid */}
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <div key={i} className="h-72 rounded-2xl bg-muted animate-pulse" />
-                        ))}
+                {/* View Toggle */}
+                <FadeIn delay={0.3}>
+                    <div className="flex justify-end mb-6">
+                        <div className="bg-muted p-1 rounded-lg flex gap-1">
+                            <button
+                                onClick={() => setViewMode('list')}
+                                className={`px-4 py-2 rounded-md text-sm font-medium transition ${viewMode === 'list' ? 'bg-white shadow-sm text-primary' : 'text-foreground/60 hover:text-foreground'}`}
+                            >
+                                <span className="mr-2">📋</span>
+                                Daftar
+                            </button>
+                            <button
+                                onClick={() => setViewMode('map')}
+                                className={`px-4 py-2 rounded-md text-sm font-medium transition ${viewMode === 'map' ? 'bg-white shadow-sm text-primary' : 'text-foreground/60 hover:text-foreground'}`}
+                            >
+                                <span className="mr-2">🗺️</span>
+                                Peta
+                            </button>
+                        </div>
                     </div>
-                ) : filteredShops.length > 0 ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        {filteredShops.map((shop, index) => (
-                            <FadeIn key={shop._id} delay={index * 0.05}>
-                                <Link href={`/toko/${shop._id}`}>
-                                    <SpotlightCard className="group cursor-pointer h-full">
-                                        <div className="h-48 overflow-hidden rounded-t-2xl relative">
-                                            <Image
-                                                src={getImageUrl(shop.image) || 'https://placehold.co/600x400/f5f0e8/8b5a2b?text=UMKM'}
-                                                alt={shop.name}
-                                                fill
-                                                className="object-cover group-hover:scale-110 transition-transform duration-500"
-                                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            />
-                                        </div>
-                                        <div className="p-5">
-                                            <span className="inline-block px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-medium mb-3">
-                                                {shop.category}
-                                            </span>
-                                            <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition mb-2">
-                                                {shop.name}
-                                            </h3>
-                                            <p className="text-foreground/60 text-sm line-clamp-2 mb-2">{shop.description}</p>
-                                            <p className="text-foreground/50 text-sm">📍 {shop.location}</p>
-                                        </div>
-                                    </SpotlightCard>
-                                </Link>
-                            </FadeIn>
-                        ))}
-                    </div>
+                </FadeIn>
+
+                {/* Content */}
+                {viewMode === 'list' ? (
+                    <>
+                        {loading ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {[1, 2, 3, 4, 5, 6].map((i) => (
+                                    <div key={i} className="h-72 rounded-2xl bg-muted animate-pulse" />
+                                ))}
+                            </div>
+                        ) : filteredShops.length > 0 ? (
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {filteredShops.map((shop, index) => (
+                                    <Link key={shop._id} href={`/toko/${shop._id}`} className="block h-full">
+                                        <SpotlightCard className="h-full flex flex-col group cursor-pointer">
+                                            <div className="relative h-48 rounded-xl overflow-hidden mb-4 bg-muted">
+                                                {shop.image ? (
+                                                    <Image
+                                                        src={getImageUrl(shop.image)}
+                                                        alt={shop.name}
+                                                        fill
+                                                        className="object-cover group-hover:scale-105 transition duration-500"
+                                                    />
+                                                ) : (
+                                                    <div className="w-full h-full flex items-center justify-center text-foreground/20 text-4xl font-bold bg-muted">
+                                                        {shop.name.charAt(0)}
+                                                    </div>
+                                                )}
+                                                <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm px-3 py-1 rounded-full text-xs font-semibold text-primary shadow-sm">
+                                                    {shop.category}
+                                                </div>
+                                            </div>
+                                            <h3 className="text-xl font-bold mb-2 group-hover:text-primary transition">{shop.name}</h3>
+                                            <p className="text-foreground/60 text-sm line-clamp-2 mb-4 flex-grow">{shop.description}</p>
+                                            <div className="flex items-center text-xs text-foreground/50 mt-auto">
+                                                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                                </svg>
+                                                {shop.location}
+                                            </div>
+                                        </SpotlightCard>
+                                    </Link>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="text-center py-20">
+                                <p className="text-foreground/40 text-lg">Tidak ada toko yang ditemukan.</p>
+                            </div>
+                        )}
+                    </>
                 ) : (
-                    <div className="text-center py-20">
-                        <div className="text-6xl mb-4">🏪</div>
-                        <h3 className="text-xl font-bold text-foreground mb-2">Tidak Ada Toko</h3>
-                        <p className="text-foreground/60">
-                            {searchTerm || selectedCategory
-                                ? 'Tidak ditemukan toko dengan kriteria tersebut'
-                                : 'Belum ada toko yang terdaftar'}
-                        </p>
-                    </div>
+                    <FadeIn>
+                        <MapViewer shops={filteredShops} />
+                    </FadeIn>
                 )}
             </div>
-        </div>
+        </div >
     );
 }
