@@ -51,7 +51,7 @@ export default function TokoPage() {
                 {/* Header */}
                 <FadeIn>
                     <div className="text-center mb-12">
-                        <h1 className="text-4xl md:text-5xl font-bold mb-4">
+                        <h1 className="text-4xl md:text-5xl font-bold mb-4 flex justify-center flex-wrap items-center">
                             <BlurText text="Toko" className="text-foreground" />
                             <span className="mx-2"> </span>
                             <BlurText text="UMKM" className="gradient-text" delay={0.1} />
