@@ -8,6 +8,7 @@ import BlurText from '@/components/reactbits/BlurText';
 import Image from 'next/image';
 import { getImageUrl } from '@/utils/media';
 import dynamic from 'next/dynamic';
+import { ShopCardSkeleton } from '@/components/Skeleton';
 
 const MapViewer = dynamic(() => import('@/components/MapViewer'), {
     ssr: false,
@@ -129,7 +130,7 @@ export default function TokoPage() {
                         {loading ? (
                             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                                 {[1, 2, 3, 4, 5, 6].map((i) => (
-                                    <div key={i} className="h-72 rounded-2xl bg-muted animate-pulse" />
+                                    <ShopCardSkeleton key={i} />
                                 ))}
                             </div>
                         ) : filteredShops.length > 0 ? (

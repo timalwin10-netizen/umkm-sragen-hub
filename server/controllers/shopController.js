@@ -29,7 +29,11 @@ const getShops = async (req, res) => {
 // @access  Public
 const getShopById = async (req, res) => {
     try {
-        const shop = await Shop.findById(req.params.id);
+        const shop = await Shop.findByIdAndUpdate(
+            req.params.id,
+            { $inc: { views: 1 } },
+            { new: true }
+        );
         if (shop) {
             res.json(shop);
         } else {

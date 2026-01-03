@@ -18,6 +18,7 @@ interface Shop {
     latitude?: number;
     longitude?: number;
     openingHours?: string;
+    views?: number;
     image: string;
     contact: {
         whatsapp?: string;
@@ -106,6 +107,38 @@ export default function ShopDetailPage() {
                                         </span>
                                         <h1 className="text-3xl font-bold text-foreground">{shop.name}</h1>
                                         <p className="text-foreground/60 mt-1">📍 {shop.location}</p>
+                                        <div className="flex items-center gap-4 mt-2">
+                                            <span className="text-foreground/50 text-sm">👁️ {shop.views || 0} views</span>
+                                        </div>
+                                    </div>
+                                    <div className="flex gap-2">
+                                        <a
+                                            href={`https://wa.me/?text=Cek toko ${shop.name} di ${typeof window !== 'undefined' ? window.location.href : ''}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="p-2 rounded-lg bg-green-500/10 text-green-600 hover:bg-green-500/20 transition"
+                                            title="Share ke WhatsApp"
+                                        >
+                                            💬
+                                        </a>
+                                        <a
+                                            href={`https://www.facebook.com/sharer/sharer.php?u=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="p-2 rounded-lg bg-blue-500/10 text-blue-600 hover:bg-blue-500/20 transition"
+                                            title="Share ke Facebook"
+                                        >
+                                            📘
+                                        </a>
+                                        <a
+                                            href={`https://twitter.com/intent/tweet?url=${typeof window !== 'undefined' ? encodeURIComponent(window.location.href) : ''}&text=Cek toko ${shop.name}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="p-2 rounded-lg bg-sky-500/10 text-sky-600 hover:bg-sky-500/20 transition"
+                                            title="Share ke Twitter"
+                                        >
+                                            🐦
+                                        </a>
                                     </div>
                                 </div>
                                 <p className="text-foreground/80 leading-relaxed whitespace-pre-line">{shop.description}</p>

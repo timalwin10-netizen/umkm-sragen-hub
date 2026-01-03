@@ -16,6 +16,7 @@ const shopSchema = mongoose.Schema({
     latitude: { type: Number, default: -7.4279 },
     longitude: { type: Number, default: 111.0188 },
     openingHours: { type: String, default: '08:00 - 17:00' },
+    views: { type: Number, default: 0 },
     image: { type: String }, // Shop banner/logo
     products: [productSchema],
     contact: {

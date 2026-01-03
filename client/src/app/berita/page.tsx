@@ -7,6 +7,7 @@ import FadeIn from '@/components/reactbits/FadeIn';
 import BlurText from '@/components/reactbits/BlurText';
 import Image from 'next/image';
 import { getImageUrl } from '@/utils/media';
+import { NewsCardSkeleton } from '@/components/Skeleton';
 
 interface News {
     _id: string;
@@ -81,7 +82,7 @@ export default function BeritaPage() {
                 {loading ? (
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         {[1, 2, 3, 4, 5, 6].map((i) => (
-                            <div key={i} className="h-80 rounded-2xl bg-muted animate-pulse" />
+                            <NewsCardSkeleton key={i} />
                         ))}
                     </div>
                 ) : filteredNews.length > 0 ? (
