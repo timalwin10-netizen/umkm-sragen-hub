@@ -15,6 +15,9 @@ interface Shop {
     description: string;
     category: string;
     location: string;
+    latitude?: number;
+    longitude?: number;
+    openingHours?: string;
     image: string;
     contact: {
         whatsapp?: string;
@@ -170,6 +173,27 @@ export default function ShopDetailPage() {
                                     )}
                                     {!shop.contact?.whatsapp && !shop.contact?.email && (
                                         <p className="text-foreground/40 text-sm italic">Tidak ada kontak tersedia</p>
+                                    )}
+                                </div>
+
+                                <div className="mt-8 pt-6 border-t border-border">
+                                    <h3 className="text-lg font-bold text-foreground mb-4">Informasi Toko</h3>
+
+                                    <div className="mb-4">
+                                        <div className="text-sm text-foreground/60 mb-1">🕒 Jam Operasional</div>
+                                        <div className="font-medium">{shop.openingHours || '08:00 - 17:00'}</div>
+                                    </div>
+
+                                    {shop.latitude && shop.longitude && (
+                                        <a
+                                            href={`https://www.google.com/maps/dir/?api=1&destination=${shop.latitude},${shop.longitude}`}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="flex items-center justify-center gap-2 w-full px-4 py-3 rounded-xl bg-blue-600 hover:bg-blue-700 text-white transition font-medium shadow-lg shadow-blue-600/20"
+                                        >
+                                            <span className="text-xl">🗺️</span>
+                                            <span>Petunjuk Arah</span>
+                                        </a>
                                     )}
                                 </div>
                             </SpotlightCard>
