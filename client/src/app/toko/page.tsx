@@ -50,13 +50,13 @@ export default function TokoPage() {
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <FadeIn>
-                    <div className="text-left mb-12">
+                    <div className="text-center mb-12">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4">
                             <BlurText text="Toko" className="text-foreground" />
                             <span className="mx-2"> </span>
                             <BlurText text="UMKM" className="gradient-text" delay={0.1} />
                         </h1>
-                        <p className="text-foreground/60 max-w-2xl">
+                        <p className="text-foreground/60 max-w-2xl mx-auto">
                             Temukan berbagai produk dan jasa dari UMKM Sragen. Dukung ekonomi lokal dengan berbelanja dari pelaku usaha daerah.
                         </p>
                     </div>

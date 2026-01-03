@@ -47,13 +47,13 @@ export default function BeritaPage() {
             <div className="container mx-auto px-4">
                 {/* Header */}
                 <FadeIn>
-                    <div className="text-left mb-12">
+                    <div className="text-center mb-12">
                         <h1 className="text-4xl md:text-5xl font-bold mb-4">
                             <BlurText text="Berita" className="text-foreground" />
                             <span className="mx-2"> </span>
                             <BlurText text="Terkini" className="gradient-text" delay={0.1} />
                         </h1>
-                        <p className="text-foreground/60 max-w-2xl">
+                        <p className="text-foreground/60 max-w-2xl mx-auto">
                             Ikuti perkembangan terbaru dari dunia UMKM Sragen. Inspirasi, tips, dan berita terkini untuk pelaku usaha.
                         </p>
                     </div>
@@ -61,7 +61,7 @@ export default function BeritaPage() {
 
                 {/* Category Filter */}
                 <FadeIn delay={0.2}>
-                    <div className="flex gap-2 flex-wrap justify-start mb-10">
+                    <div className="flex gap-2 flex-wrap justify-center mb-10">
                         {categories.map((cat) => (
                             <button
                                 key={cat}
