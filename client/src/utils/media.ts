@@ -1,6 +1,6 @@
 export const getImageUrl = (path: string | undefined | null) => {
     if (!path) return '';
-    if (path.startsWith('http')) return path;
+    if (path.startsWith('http') || path.startsWith('blob:')) return path;
 
     // In production, we assume relative paths work via rewrites/proxy
     // In development, we default to localhost:5000

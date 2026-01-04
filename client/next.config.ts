@@ -15,6 +15,10 @@ const nextConfig: NextConfig = {
       {
         protocol: 'https',
         hostname: 'umkm-sragen-hub.vercel.app',
+      },
+      {
+        protocol: 'https',
+        hostname: 'res.cloudinary.com',
       }
     ],
   },
