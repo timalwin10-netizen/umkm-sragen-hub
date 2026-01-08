@@ -15,7 +15,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "UMKM Sragen Hub",
+  title: "gerai umkm sragen",
   description: "Platform Digital untuk Memajukan UMKM Sragen",
 };
 
