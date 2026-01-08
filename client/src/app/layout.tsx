@@ -17,6 +17,18 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "gerai umkm sragen",
   description: "Platform Digital untuk Memajukan UMKM Sragen",
+  keywords: [
+    "UMKM Sragen",
+    "Toko Online Sragen",
+    "Belanja Sragen",
+    "Marketplace Sragen",
+    "Produk Lokal Sragen",
+    "Digital Marketing UMKM",
+    "Bisnis Sragen",
+    "Jualan Online Sragen",
+    "Gerai UMKM",
+    "UKM Jawa Tengah"
+  ],
 };
 
 export default function RootLayout({
