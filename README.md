@@ -1,4 +1,4 @@
-# 🏪 UMKM Sragen Hub
+# 🏪 GERAI UMKM Sragen
 
 Platform digital untuk memajukan UMKM (Usaha Mikro, Kecil, dan Menengah) di Kabupaten Sragen, Jawa Tengah.
 
@@ -212,28 +212,7 @@ export default function MyPage() {
 
 ---
 
-## 👤 Akses Admin
 
-Untuk membuat akun admin, jalankan script berikut di console browser:
-
-```javascript
-fetch('http://127.0.0.1:5000/api/auth/register', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ 
-    name: 'Admin', 
-    email: 'admin@sragen.id', 
-    password: 'admin123',
-    adminKey: 'sragen-admin-2025'
-  })
-}).then(res => res.json()).then(data => {
-  localStorage.setItem('token', data.token);
-  localStorage.setItem('user', JSON.stringify(data));
-  window.location.href = '/admin';
-});
-```
-
----
 
 ## 🎨 Theme Colors
 
@@ -249,9 +228,6 @@ fetch('http://127.0.0.1:5000/api/auth/register', {
 
 ---
 
-## 📝 License
-
-MIT License - Free to use and modify.
 
 ---
 
@@ -261,4 +237,4 @@ Kontribusi sangat diterima! Silakan buat Pull Request atau Issue.
 
 ---
 
-**Made with ❤️ for UMKM Sragen**
+**Made with kesabaran for UMKM Sragen**
